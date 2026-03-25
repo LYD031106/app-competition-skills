@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "report_date": "YYYY-MM-DD",
+    "report_slug": "fill-me",
+    "baseline_or_delta": "baseline",
+    "default_market": "fill-me"
+  },
+  "scope": {
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "apps": []
+  },
+  "keyword_analysis": {
+    "watchlist": [],
+    "current": [],
+    "changes": [],
+    "limitations": []
+  },
+  "release_analysis": {
+    "current": [],
+    "changes": [],
+    "limitations": []
+  },
+  "material_analysis": {
+    "current": [],
+    "changes": [],
+    "limitations": []
+  },
+  "review_analysis": {
+    "current": [],
+    "changes": [],
+    "limitations": []
+  },
+  "pricing_analysis": {
+    "current": [],
+    "changes": [],
+    "limitations": []
+  },
+  "developer_analysis": {
+    "current": [],
+    "changes": [],
+    "limitations": []
+  },
+  "similar_apps_analysis": {
+    "current": [],
+    "changes": [],
+    "limitations": []
+  },
+  "highlights": [],
+  "limitations": []
+}

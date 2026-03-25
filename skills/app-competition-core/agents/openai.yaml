@@ -1,0 +1,4 @@
+interface:
+  display_name: "App Competition Core"
+  short_description: "Coordinate app competition research workflows"
+  default_prompt: "Use $app-competition-core to set up project competition tracking and route discovery or reporting work."
