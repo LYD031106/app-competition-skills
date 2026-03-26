@@ -1,6 +1,6 @@
 ---
 name: app-competition-discovery
-description: Use when finding newly relevant competitor apps, expanding a watchlist, checking charts or similar apps, or deciding whether an app should be added to focus-apps.md or the candidate pool.
+description: Use when finding newly relevant competitor apps in a configured market, expanding a watchlist, checking charts or similar apps, or deciding whether an app should be added to focus-apps.md or the candidate pool.
 ---
 
 # App Competition Discovery
@@ -16,6 +16,7 @@ description: Use when finding newly relevant competitor apps, expanding a watchl
 - `docs/app-competition/focus-apps.md`
 
 如果以下任一条件不满足，先停下来补配置：
+- `appstore-mcp` 或 `mcp-appstore` 不可用；此时先引用 `../app-competition-core/references/mcp-installation.md`
 - `default_market` 未声明
 - `platforms` 未声明
 - `target_app` 为空，且 `focus-apps.md` 中也没有任何目标或直接竞品
@@ -41,6 +42,11 @@ description: Use when finding newly relevant competitor apps, expanding a watchl
 - `priority`
 - 最近一次复查时间
 
+市场规则：
+- 所有搜索、榜单、相似应用采集都优先使用 `default_market`。
+- `US` 是推荐默认市场，但不应被擅自假设。
+- 只有在项目文件显式声明双平台时，才做双平台 discovery。
+
 ### 2. 生成发现种子
 
 优先使用以下种子组合：
@@ -65,6 +71,7 @@ description: Use when finding newly relevant competitor apps, expanding a watchl
 
 两套 MCP 的分工见：
 - [../app-competition-core/references/mcp-playbook.md](../app-competition-core/references/mcp-playbook.md)
+- 如果 MCP 不可用或用户明确说“还没安装”，先看 [../app-competition-core/references/mcp-installation.md](../app-competition-core/references/mcp-installation.md)
 
 ### 4. 初筛与分类
 
@@ -130,7 +137,9 @@ description: Use when finding newly relevant competitor apps, expanding a watchl
 ## Common Mistakes
 
 - 直接把搜索结果全量写进 `focus-apps.md`
+- 没装好 MCP 就开始假装做发现，最后给出缺证据的结论
 - 没有 `default_market` 就开始抓榜单或关键词
+- 默认把 `CN` 当作市场，而不是遵守项目里的 `default_market`
 - 只看单一平台，忽略项目声明的双平台范围
 - 把“相似 app 返回了”直接等同于“值得长期跟踪”
 - 没有评分和理由就直接写入重点关注清单
@@ -140,5 +149,6 @@ description: Use when finding newly relevant competitor apps, expanding a watchl
 
 - [../app-competition-core/references/workflow-map.md](../app-competition-core/references/workflow-map.md)
 - [../app-competition-core/references/evidence-rules.md](../app-competition-core/references/evidence-rules.md)
+- [../app-competition-core/references/mcp-installation.md](../app-competition-core/references/mcp-installation.md)
 - [../app-competition-core/assets/focus-apps-template.md](../app-competition-core/assets/focus-apps-template.md)
 - [../app-competition-core/examples/discovery-review.md](../app-competition-core/examples/discovery-review.md)

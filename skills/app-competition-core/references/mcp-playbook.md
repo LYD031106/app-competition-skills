@@ -43,6 +43,20 @@
   - 以 `mcp-appstore` 为主体
   - 用 `appstore-mcp` 补 iOS 截图、发布日期和快速对照
 
+## Installation And Readiness
+
+- 如果用户说“没装 MCP / 这两个工具怎么配”，先引用 [mcp-installation.md](mcp-installation.md)。
+- 如果任一工具调用失败，不要直接进入发现或报告；先确认：
+  - 服务器是否在 MCP 配置中注册
+  - 启动命令是否可执行
+  - 至少一个基础工具是否能成功返回数据
+
+建议最小验证集：
+- `appstore-mcp.search_apps`
+- `appstore-mcp.get_app_info`
+- `mcp-appstore.search_app`
+- `mcp-appstore.get_app_details`
+
 ## Limitations To Surface
 
 - `get_keyword_scores` 是近似评分，不是官方精确排名历史。

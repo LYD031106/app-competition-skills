@@ -2,28 +2,54 @@
   "metadata": {
     "report_date": "YYYY-MM-DD",
     "report_slug": "fill-me",
+    "report_type": "baseline",
     "baseline_or_delta": "baseline",
-    "default_market": "fill-me"
+    "default_market": "fill-me",
+    "comparison_window": {
+      "start": "YYYY-MM-DD",
+      "end": "YYYY-MM-DD",
+      "comparison_baseline_path": "fill-me"
+    }
   },
   "scope": {
     "platforms": [
       "ios",
       "android"
     ],
-    "apps": []
+    "apps": [],
+    "seed_keywords": []
   },
+  "apps": [],
   "keyword_analysis": {
     "watchlist": [],
+    "tracked_keywords": [],
+    "rank_tracking": [],
+    "alerts": [],
     "current": [],
     "changes": [],
+    "derived_metrics": {
+      "top10_coverage_count": 0,
+      "top20_coverage_count": 0,
+      "traffic_weighted_visibility": 0
+    },
     "limitations": []
   },
   "release_analysis": {
+    "comparison_window": {
+      "start": "YYYY-MM-DD",
+      "end": "YYYY-MM-DD"
+    },
+    "apps": [],
     "current": [],
     "changes": [],
     "limitations": []
   },
   "material_analysis": {
+    "comparison_window": {
+      "start": "YYYY-MM-DD",
+      "end": "YYYY-MM-DD"
+    },
+    "apps": [],
     "current": [],
     "changes": [],
     "limitations": []
@@ -49,5 +75,14 @@
     "limitations": []
   },
   "highlights": [],
+  "evidence_appendix": [],
+  "quality_checks": {
+    "mcp_ready": false,
+    "has_comparison_window": false,
+    "has_release_watch": false,
+    "has_top3_screenshot_review": false,
+    "has_keyword_rank_alerts": false,
+    "has_limitations": false
+  },
   "limitations": []
 }

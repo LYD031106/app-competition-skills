@@ -1,4 +1,4 @@
 interface:
   display_name: "App Competition Discovery"
-  short_description: "Discover candidate apps for competition tracking"
-  default_prompt: "Use $app-competition-discovery to find newly relevant competitor apps before adding them to the watchlist."
+  short_description: "Find new competitor apps in the target market"
+  default_prompt: "Use $app-competition-discovery to find newly relevant competitor apps in the configured market before adding them to the watchlist."
