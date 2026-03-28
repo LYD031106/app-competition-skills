@@ -1,4 +1,4 @@
 interface:
   display_name: "App Competition Reporting"
-  short_description: "Create structured app competition reports"
-  default_prompt: "Use $app-competition-reporting to generate a deep competitor report with markdown and JSON outputs."
+  short_description: "Write decision-first overseas app competition reports"
+  default_prompt: "Use $app-competition-reporting to collect fresh competitor data, prioritize the overseas market, answer release, top-3 screenshot, and keyword-rank questions first, then write a decision-first markdown report plus JSON snapshot."

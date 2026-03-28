@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "project_name": "",
+    "report_slug": "",
+    "report_type": "monthly-deep-dive",
+    "primary_market": "",
+    "secondary_markets": [],
+    "comparison_window": "",
+    "latest_collection_at": "",
+    "report_path": "",
+    "evidence_path": ""
+  },
+  "report_rendering": {
+    "primary_audience": "product_aso_lead",
+    "name_first": true,
+    "body_uses_app_id": false,
+    "main_sections": [
+      "TL;DR",
+      "三问执行摘要",
+      "Market Snapshot",
+      "Release Watch",
+      "Top-3 Screenshot Diff",
+      "Keyword Rank Shocks And Opportunities",
+      "What It Means For Us",
+      "Evidence Appendix",
+      "Limitations"
+    ]
+  },
+  "summary_cards": [
+    {
+      "question": "",
+      "answer": "",
+      "action": ""
+    }
+  ],
+  "market_snapshot": {
+    "summary": {
+      "state": "",
+      "key_change_chain": []
+    },
+    "comparison_matrix": []
+  },
+  "release_analysis": {
+    "apps": [
+      {
+        "app_name": "",
+        "app_id": "",
+        "current_version": "",
+        "updated_at": "",
+        "within_30d": false,
+        "whats_new_raw": "",
+        "whats_new_summary": "",
+        "release_theme": "",
+        "user_visible_change": "none"
+      }
+    ]
+  },
+  "material_analysis": {
+    "apps": [
+      {
+        "app_name": "",
+        "app_id": "",
+        "top3": [
+          {
+            "position": 1,
+            "semantic_summary": "",
+            "inferred": false
+          }
+        ]
+      }
+    ],
+    "changes": [
+      {
+        "app_name": "",
+        "app_id": "",
+        "changed": null,
+        "before_theme": null,
+        "after_theme": "",
+        "message_shift": "",
+        "likely_reason": "",
+        "change_chain": [],
+        "inferred": false
+      }
+    ]
+  },
+  "keyword_analysis": {
+    "rank_tracking": [
+      {
+        "keyword": "",
+        "target_rank": null,
+        "leader_app_name": "",
+        "leader_app_id": "",
+        "leader_rank": null,
+        "previous_rank": null,
+        "delta": null,
+        "alert_type": ""
+      }
+    ],
+    "alerts": {
+      "defensive_keywords": [],
+      "opportunity_keywords": [],
+      "notes": []
+    }
+  },
+  "limitations": []
+}

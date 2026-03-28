@@ -1,0 +1,258 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "App Competition Monthly Deep Dive Snapshot",
+  "type": "object",
+  "required": [
+    "metadata",
+    "report_rendering",
+    "summary_cards",
+    "market_snapshot",
+    "release_analysis",
+    "material_analysis",
+    "keyword_analysis",
+    "limitations"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "project_name",
+        "report_slug",
+        "report_type",
+        "primary_market",
+        "comparison_window",
+        "latest_collection_at"
+      ],
+      "properties": {
+        "project_name": { "type": "string" },
+        "report_slug": { "type": "string" },
+        "report_type": {
+          "type": "string",
+          "enum": ["baseline", "pulse", "monthly-deep-dive"]
+        },
+        "primary_market": { "type": "string" },
+        "secondary_markets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "comparison_window": { "type": "string" },
+        "latest_collection_at": { "type": "string" },
+        "report_path": { "type": "string" },
+        "evidence_path": { "type": "string" }
+      }
+    },
+    "report_rendering": {
+      "type": "object",
+      "required": [
+        "primary_audience",
+        "name_first",
+        "body_uses_app_id",
+        "main_sections"
+      ],
+      "properties": {
+        "primary_audience": { "type": "string" },
+        "name_first": { "type": "boolean" },
+        "body_uses_app_id": { "type": "boolean" },
+        "main_sections": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "summary_cards": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["question", "answer", "action"],
+        "properties": {
+          "question": { "type": "string" },
+          "answer": { "type": "string" },
+          "action": { "type": "string" }
+        }
+      }
+    },
+    "market_snapshot": {
+      "type": "object",
+      "required": ["summary", "comparison_matrix"],
+      "properties": {
+        "summary": {
+          "type": "object",
+          "required": ["state", "key_change_chain"],
+          "properties": {
+            "state": { "type": "string" },
+            "key_change_chain": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "comparison_matrix": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["app_name", "app_id", "role"],
+            "properties": {
+              "app_name": { "type": "string" },
+              "app_id": { "type": "string" },
+              "role": { "type": "string" },
+              "released_within_30d": { "type": ["boolean", "null"] },
+              "top3_state": { "type": ["string", "null"] },
+              "keyword_alert": { "type": ["string", "null"] },
+              "why_it_matters": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "release_analysis": {
+      "type": "object",
+      "required": ["apps"],
+      "properties": {
+        "apps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "app_name",
+              "app_id",
+              "current_version",
+              "updated_at",
+              "within_30d",
+              "whats_new_raw",
+              "whats_new_summary",
+              "release_theme",
+              "user_visible_change"
+            ],
+            "properties": {
+              "app_name": { "type": "string" },
+              "app_id": { "type": "string" },
+              "current_version": { "type": ["string", "null"] },
+              "updated_at": { "type": ["string", "null"] },
+              "within_30d": { "type": "boolean" },
+              "whats_new_raw": { "type": ["string", "null"] },
+              "whats_new_summary": { "type": ["string", "null"] },
+              "release_theme": { "type": ["string", "null"] },
+              "user_visible_change": {
+                "type": "string",
+                "enum": ["none", "low", "medium", "high"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "material_analysis": {
+      "type": "object",
+      "required": ["apps", "changes"],
+      "properties": {
+        "apps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["app_name", "app_id", "top3"],
+            "properties": {
+              "app_name": { "type": "string" },
+              "app_id": { "type": "string" },
+              "top3": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["position", "semantic_summary", "inferred"],
+                  "properties": {
+                    "position": { "type": "integer" },
+                    "semantic_summary": { "type": "string" },
+                    "inferred": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "app_name",
+              "app_id",
+              "changed",
+              "after_theme",
+              "message_shift",
+              "likely_reason",
+              "change_chain",
+              "inferred"
+            ],
+            "properties": {
+              "app_name": { "type": "string" },
+              "app_id": { "type": "string" },
+              "changed": { "type": ["boolean", "null"] },
+              "before_theme": { "type": ["string", "null"] },
+              "after_theme": { "type": ["string", "null"] },
+              "message_shift": { "type": ["string", "null"] },
+              "likely_reason": { "type": ["string", "null"] },
+              "change_chain": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "inferred": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "keyword_analysis": {
+      "type": "object",
+      "required": ["rank_tracking", "alerts"],
+      "properties": {
+        "rank_tracking": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "keyword",
+              "leader_app_name",
+              "leader_app_id",
+              "leader_rank",
+              "previous_rank",
+              "delta",
+              "alert_type"
+            ],
+            "properties": {
+              "keyword": { "type": "string" },
+              "target_rank": { "type": ["integer", "null"] },
+              "leader_app_name": { "type": "string" },
+              "leader_app_id": { "type": "string" },
+              "leader_rank": { "type": ["integer", "null"] },
+              "previous_rank": { "type": ["integer", "null", "string"] },
+              "delta": { "type": ["integer", "null", "string"] },
+              "alert_type": { "type": "string" }
+            }
+          }
+        },
+        "alerts": {
+          "type": "object",
+          "required": ["defensive_keywords", "opportunity_keywords"],
+          "properties": {
+            "defensive_keywords": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "opportunity_keywords": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
