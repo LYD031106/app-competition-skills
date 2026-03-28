@@ -9,6 +9,20 @@
 - 想稳定产出带证据链的竞品分析报告
 - 想把竞品分析能力沉淀成团队可复用的 skills
 
+## 本地更新约定
+
+对于 `app-competition-reporting` 的后续更新，权威本地工作目录固定为：
+
+- `E:\codex\skills\app-competition-reporting`
+
+推荐维护方式：
+
+1. 先在 `E:\codex\skills\app-competition-reporting` 中修改和验证。
+2. 确认本地生效后，再同步回本仓库中的 `skills/app-competition-reporting/`。
+3. 最后再提交并推送远程仓库。
+
+这样做的目的是保证“本机实际生效的 skill”与“Git 仓库中的可版本化副本”保持一致。
+
 ## 仓库包含什么
 
 仓库当前包含 3 个核心 skill：
