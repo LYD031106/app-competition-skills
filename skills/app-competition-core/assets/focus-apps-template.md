@@ -9,6 +9,6 @@
 
 ## Apps
 
-| app_name | platform | market | priority | reason_to_watch | watch_type | last_reviewed_at | status |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| [fill-me] | ios/android | [fill-me] | p0 | [fill-me] | target | YYYY-MM-DD | active |
+| app_name | app_store_url | platform | market | priority | reason_to_watch | watch_type | last_reviewed_at | status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [fill-me] | https://example.com/app | ios/android | [fill-me] | p0 | [fill-me] | target | YYYY-MM-DD | active |

@@ -3,6 +3,18 @@
     "project_name": "",
     "report_slug": "",
     "report_type": "monthly-deep-dive",
+    "delivery_channel": "markdown",
+    "summary_doc_mode": "per_run",
+    "detail_doc_mode": "single_child",
+    "preserve_existing_content": true,
+    "market_scope": {
+      "target_app": "",
+      "target_app_store_url": "",
+      "platforms": [],
+      "primary_market": "",
+      "secondary_markets": [],
+      "target_keywords": []
+    },
     "primary_market": "",
     "secondary_markets": [],
     "comparison_window": "",
@@ -14,19 +26,48 @@
     "primary_audience": "product_aso_lead",
     "name_first": true,
     "body_uses_app_id": false,
+    "body_uses_app_links": true,
     "main_sections": [
-      "TL;DR",
-      "三问执行摘要",
-      "Market Snapshot",
-      "Release Watch",
-      "Top-3 Screenshot Diff",
-      "Keyword Rank Shocks And Opportunities",
-      "What It Means For Us",
+      "决策入口层",
+      "一句话结论",
+      "Name Collision / Ambiguity Alert",
+      "目标产品关键词表现",
+      "竞品动态",
+      "建议行动",
+      "Optional Context",
+      "Detail Delivery Context",
+      "Back To Main Summary",
+      "研究证据层",
+      "目标产品关键词详细证据",
+      "竞品 Name / Title / Top-3 Screenshot 证据",
+      "Release Context",
       "Evidence Appendix",
       "Limitations"
     ]
   },
+  "delivery_outputs": {
+    "summary_doc": {
+      "doc_id": "",
+      "doc_url": "",
+      "title": ""
+    },
+    "detail_doc": {
+      "doc_id": "",
+      "doc_url": "",
+      "title": ""
+    }
+  },
   "summary_cards": [
+    {
+      "question": "",
+      "answer": "",
+      "action": ""
+    },
+    {
+      "question": "",
+      "answer": "",
+      "action": ""
+    },
     {
       "question": "",
       "answer": "",
@@ -45,6 +86,7 @@
       {
         "app_name": "",
         "app_id": "",
+        "app_store_url": "",
         "current_version": "",
         "updated_at": "",
         "within_30d": false,
@@ -60,6 +102,12 @@
       {
         "app_name": "",
         "app_id": "",
+        "app_store_url": "",
+        "screenshot_collection_status": "tool_present",
+        "screenshot_sources": [],
+        "device_coverage": "unknown",
+        "webpage_screenshot_evidence": [],
+        "web_fallback_used": false,
         "top3": [
           {
             "position": 1,
@@ -73,12 +121,18 @@
       {
         "app_name": "",
         "app_id": "",
+        "app_store_url": "",
         "changed": null,
         "before_theme": null,
         "after_theme": "",
         "message_shift": "",
         "likely_reason": "",
         "change_chain": [],
+        "screenshot_collection_status": "tool_present",
+        "screenshot_sources": [],
+        "device_coverage": "unknown",
+        "webpage_screenshot_evidence": [],
+        "web_fallback_used": false,
         "inferred": false
       }
     ]
@@ -88,17 +142,25 @@
       {
         "keyword": "",
         "target_rank": null,
-        "leader_app_name": "",
-        "leader_app_id": "",
-        "leader_rank": null,
         "previous_rank": null,
         "delta": null,
-        "alert_type": ""
+        "leader_app_name": "",
+        "leader_rank": null,
+        "leader_app_store_url": "",
+        "collected_at": "",
+        "target_keyword_source": "",
+        "target_keyword_last_verified_at": "",
+        "leader_app_id": "",
+        "traffic_score": null,
+        "difficulty_score": null,
+        "change_chain": [],
+        "alert_type": "",
+        "note": ""
       }
     ],
     "alerts": {
-      "defensive_keywords": [],
-      "opportunity_keywords": [],
+      "at_risk_target_keywords": [],
+      "recoverable_target_keywords": [],
       "notes": []
     }
   },

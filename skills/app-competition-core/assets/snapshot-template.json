@@ -2,28 +2,104 @@
   "metadata": {
     "report_date": "YYYY-MM-DD",
     "report_slug": "fill-me",
-    "baseline_or_delta": "baseline",
-    "default_market": "fill-me"
+    "report_type": "monthly-deep-dive",
+    "baseline_or_delta": "delta",
+    "collection_mode": "fresh-run",
+    "default_market": "US",
+    "market_scope": {
+      "primary_market": "US",
+      "secondary_markets": [
+        "CN"
+      ],
+      "priority_rule": "overseas-first; secondary markets only for comparison or triggered signals"
+    },
+    "comparison_window": {
+      "start": "YYYY-MM-DD",
+      "end": "YYYY-MM-DD",
+      "comparison_baseline_path": "fill-me"
+    },
+    "latest_collection_at": "YYYY-MM-DDTHH:MM:SSZ"
   },
   "scope": {
     "platforms": [
       "ios",
       "android"
     ],
-    "apps": []
+    "apps": [
+      {
+        "app_name": "",
+        "app_id": "",
+        "app_store_url": ""
+      }
+    ],
+    "core_competitors": [
+      {
+        "app_name": "",
+        "app_id": "",
+        "app_store_url": ""
+      }
+    ],
+    "watch_pool": [
+      {
+        "app_name": "",
+        "app_id": "",
+        "app_store_url": ""
+      }
+    ],
+    "report_focus": [
+      "target keyword rank shifts",
+      "competitor name/title changes",
+      "top-3 screenshot changes"
+    ],
+    "target_keywords": [],
+    "target_keyword_source": "missing",
+    "target_keyword_source_ref": "fill-me",
+    "target_keyword_last_verified_at": "YYYY-MM-DD"
+  },
+  "collection_log": {
+    "discovery_refreshed": true,
+    "discovery_evidence_path": "fill-me",
+    "sources": [],
+    "limitations": []
+  },
+  "apps": [],
+  "market_snapshot": {
+    "primary_market_summary": [],
+    "secondary_market_signals": [],
+    "comparison_matrix": []
   },
   "keyword_analysis": {
-    "watchlist": [],
+    "target_keywords": [],
+    "target_keyword_source": "missing",
+    "rank_tracking": [],
+    "alerts": [],
+    "at_risk_target_keywords": [],
+    "recoverable_target_keywords": [],
     "current": [],
     "changes": [],
+    "aso_interpretation": {
+      "store_audit_notes": [],
+      "cro_notes": [],
+      "review_notes": []
+    },
     "limitations": []
   },
   "release_analysis": {
+    "comparison_window": {
+      "start": "YYYY-MM-DD",
+      "end": "YYYY-MM-DD"
+    },
+    "apps": [],
     "current": [],
     "changes": [],
     "limitations": []
   },
   "material_analysis": {
+    "comparison_window": {
+      "start": "YYYY-MM-DD",
+      "end": "YYYY-MM-DD"
+    },
+    "apps": [],
     "current": [],
     "changes": [],
     "limitations": []
@@ -31,23 +107,39 @@
   "review_analysis": {
     "current": [],
     "changes": [],
+    "used_in_report": false,
     "limitations": []
   },
   "pricing_analysis": {
     "current": [],
     "changes": [],
+    "used_in_report": false,
     "limitations": []
   },
   "developer_analysis": {
     "current": [],
     "changes": [],
+    "used_in_report": false,
     "limitations": []
   },
   "similar_apps_analysis": {
     "current": [],
     "changes": [],
+    "used_in_report": false,
     "limitations": []
   },
   "highlights": [],
+  "next_actions": [],
+  "evidence_appendix": [],
+  "quality_checks": {
+    "mcp_ready": false,
+    "has_fresh_collection": false,
+    "has_primary_market_summary": false,
+    "has_release_watch": false,
+    "has_top3_screenshot_review": false,
+    "has_keyword_rank_alerts": false,
+    "has_limitations": false,
+    "has_app_store_links": false
+  },
   "limitations": []
 }

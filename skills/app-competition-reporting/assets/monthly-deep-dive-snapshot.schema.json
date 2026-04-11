@@ -4,6 +4,7 @@
   "type": "object",
   "required": [
     "metadata",
+    "delivery_outputs",
     "report_rendering",
     "summary_cards",
     "market_snapshot",
@@ -19,7 +20,11 @@
         "project_name",
         "report_slug",
         "report_type",
-        "primary_market",
+        "delivery_channel",
+        "summary_doc_mode",
+        "detail_doc_mode",
+        "preserve_existing_content",
+        "market_scope",
         "comparison_window",
         "latest_collection_at"
       ],
@@ -29,6 +34,37 @@
         "report_type": {
           "type": "string",
           "enum": ["baseline", "pulse", "monthly-deep-dive"]
+        },
+        "delivery_channel": { "type": "string" },
+        "summary_doc_mode": { "type": "string" },
+        "detail_doc_mode": { "type": "string" },
+        "preserve_existing_content": { "type": "boolean" },
+        "market_scope": {
+          "type": "object",
+          "required": [
+            "target_app",
+            "platforms",
+            "primary_market",
+            "secondary_markets",
+            "target_keywords"
+          ],
+          "properties": {
+            "target_app": { "type": "string" },
+            "target_app_store_url": { "type": "string" },
+            "platforms": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "primary_market": { "type": "string" },
+            "secondary_markets": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "target_keywords": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
         },
         "primary_market": { "type": "string" },
         "secondary_markets": {
@@ -41,18 +77,44 @@
         "evidence_path": { "type": "string" }
       }
     },
+    "delivery_outputs": {
+      "type": "object",
+      "required": ["summary_doc", "detail_doc"],
+      "properties": {
+        "summary_doc": {
+          "type": "object",
+          "required": ["doc_id", "doc_url", "title"],
+          "properties": {
+            "doc_id": { "type": "string" },
+            "doc_url": { "type": "string" },
+            "title": { "type": "string" }
+          }
+        },
+        "detail_doc": {
+          "type": "object",
+          "required": ["doc_id", "doc_url", "title"],
+          "properties": {
+            "doc_id": { "type": "string" },
+            "doc_url": { "type": "string" },
+            "title": { "type": "string" }
+          }
+        }
+      }
+    },
     "report_rendering": {
       "type": "object",
       "required": [
         "primary_audience",
         "name_first",
         "body_uses_app_id",
+        "body_uses_app_links",
         "main_sections"
       ],
       "properties": {
         "primary_audience": { "type": "string" },
         "name_first": { "type": "boolean" },
         "body_uses_app_id": { "type": "boolean" },
+        "body_uses_app_links": { "type": "boolean" },
         "main_sections": {
           "type": "array",
           "items": { "type": "string" }
@@ -91,10 +153,11 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["app_name", "app_id", "role"],
+            "required": ["app_name", "app_id", "app_store_url", "role"],
             "properties": {
               "app_name": { "type": "string" },
               "app_id": { "type": "string" },
+              "app_store_url": { "type": "string" },
               "role": { "type": "string" },
               "released_within_30d": { "type": ["boolean", "null"] },
               "top3_state": { "type": ["string", "null"] },
@@ -116,6 +179,7 @@
             "required": [
               "app_name",
               "app_id",
+              "app_store_url",
               "current_version",
               "updated_at",
               "within_30d",
@@ -127,6 +191,7 @@
             "properties": {
               "app_name": { "type": "string" },
               "app_id": { "type": "string" },
+              "app_store_url": { "type": "string" },
               "current_version": { "type": ["string", "null"] },
               "updated_at": { "type": ["string", "null"] },
               "within_30d": { "type": "boolean" },
@@ -150,10 +215,32 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["app_name", "app_id", "top3"],
+            "required": [
+              "app_name",
+              "app_id",
+              "app_store_url",
+              "top3",
+              "screenshot_collection_status",
+              "screenshot_sources",
+              "device_coverage",
+              "webpage_screenshot_evidence",
+              "web_fallback_used"
+            ],
             "properties": {
               "app_name": { "type": "string" },
               "app_id": { "type": "string" },
+              "app_store_url": { "type": "string" },
+              "screenshot_collection_status": { "type": "string" },
+              "screenshot_sources": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "device_coverage": { "type": "string" },
+              "webpage_screenshot_evidence": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "web_fallback_used": { "type": "boolean" },
               "top3": {
                 "type": "array",
                 "items": {
@@ -176,16 +263,23 @@
             "required": [
               "app_name",
               "app_id",
+              "app_store_url",
               "changed",
               "after_theme",
               "message_shift",
               "likely_reason",
               "change_chain",
+              "screenshot_collection_status",
+              "screenshot_sources",
+              "device_coverage",
+              "webpage_screenshot_evidence",
+              "web_fallback_used",
               "inferred"
             ],
             "properties": {
               "app_name": { "type": "string" },
               "app_id": { "type": "string" },
+              "app_store_url": { "type": "string" },
               "changed": { "type": ["boolean", "null"] },
               "before_theme": { "type": ["string", "null"] },
               "after_theme": { "type": ["string", "null"] },
@@ -195,6 +289,17 @@
                 "type": "array",
                 "items": { "type": "string" }
               },
+              "screenshot_collection_status": { "type": "string" },
+              "screenshot_sources": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "device_coverage": { "type": "string" },
+              "webpage_screenshot_evidence": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "web_fallback_used": { "type": "boolean" },
               "inferred": { "type": "boolean" }
             }
           }
@@ -211,34 +316,51 @@
             "type": "object",
             "required": [
               "keyword",
-              "leader_app_name",
-              "leader_app_id",
-              "leader_rank",
+              "target_rank",
               "previous_rank",
               "delta",
-              "alert_type"
+              "leader_app_name",
+              "leader_rank",
+              "leader_app_store_url",
+              "collected_at",
+              "target_keyword_source",
+              "target_keyword_last_verified_at"
             ],
             "properties": {
               "keyword": { "type": "string" },
               "target_rank": { "type": ["integer", "null"] },
-              "leader_app_name": { "type": "string" },
-              "leader_app_id": { "type": "string" },
-              "leader_rank": { "type": ["integer", "null"] },
               "previous_rank": { "type": ["integer", "null", "string"] },
               "delta": { "type": ["integer", "null", "string"] },
-              "alert_type": { "type": "string" }
+              "leader_app_name": { "type": "string" },
+              "leader_rank": { "type": ["integer", "null"] },
+              "leader_app_store_url": { "type": "string" },
+              "collected_at": { "type": "string" },
+              "target_keyword_source": { "type": "string" },
+              "target_keyword_last_verified_at": { "type": "string" },
+              "leader_app_id": { "type": "string" },
+              "traffic_score": { "type": ["number", "null"] },
+              "difficulty_score": { "type": ["number", "null"] },
+              "change_chain": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "alert_type": { "type": "string" },
+              "note": { "type": "string" }
             }
           }
         },
         "alerts": {
           "type": "object",
-          "required": ["defensive_keywords", "opportunity_keywords"],
+          "required": [
+            "at_risk_target_keywords",
+            "recoverable_target_keywords"
+          ],
           "properties": {
-            "defensive_keywords": {
+            "at_risk_target_keywords": {
               "type": "array",
               "items": { "type": "string" }
             },
-            "opportunity_keywords": {
+            "recoverable_target_keywords": {
               "type": "array",
               "items": { "type": "string" }
             },
