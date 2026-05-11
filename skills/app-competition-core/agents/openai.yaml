@@ -1,4 +1,4 @@
 interface:
-  display_name: "App Competition Core"
-  short_description: "Coordinate app competition research workflows"
-  default_prompt: "Use $app-competition-core to set up project competition tracking and route discovery or reporting work."
+  display_name: "App Portfolio Competition Orchestrator"
+  short_description: "Coordinate app competitor research"
+  default_prompt: "Use $app-competition-core to coordinate competitor research for one or many owned apps, maintain app-competition contracts, route discovery/reporting, and deliver a Feishu-ready portfolio summary. For portfolio runs, create one summary document by default: start with 产品关键词记录, then repeat per owned app with 目标产品关键词记录, 目标产品字段核查, 竞品变化核查, and 竞品宣传图核查. Do not add extra opening summary tables, overview prose, archive/evidence tables, limitation sections, or a detail document unless explicitly requested. Show competitor icon and competitor iPhone top-3 promotional images only; do not show owned-app screenshots by default. Preserve store descriptions and release notes verbatim, compare descriptions against the previous snapshot, and keep collection pipeline terms out of user-facing summaries."

@@ -1,79 +1,119 @@
 ---
 name: app-competition-core
-description: Use when setting up or maintaining project-level app competition tracking, updating docs/app-competition/app-compete.md or focus-apps.md, or routing requests for new competitor discovery and deep competitor reports.
+description: Use when initializing or maintaining app competition research workspaces, defining market/delivery/keyword contracts, handling one or many owned apps in a portfolio competitor-analysis run, or coordinating end-to-end competitor research through discovery, reporting, Feishu delivery, email handoff, external access checks, and project index backfill.
 ---
 
 # App Competition Core
 
 ## Overview
 
-为单个项目维护长期竞品分析工作区。这个 skill 负责初始化 `docs/app-competition/`、维护 `app-compete.md` 与 `focus-apps.md`，并把“找新增 app”与“写深度报告”路由到专用子 skill。
+这个 skill 是 `docs/app-competition/` 的轻量总控：负责项目 contract、路由、交付门禁和多产品摘要收口。它不直接替代 `$app-competition-discovery` 或 `$app-competition-reporting` 的采集 / 成稿细节。
+
+默认职责：
+- 初始化或维护 `docs/app-competition/` 项目结构。
+- 解析市场、关键词来源、交付方式和目标产品 contract。
+- 单产品报告路由到 discovery / reporting。
+- 多自有产品进入 Portfolio Mode，由主 agent 汇总各产品 work unit。
+- Feishu / dual 交付默认只创建 1 份飞书摘要文档；详细子文档只有用户明确要求时才创建。
+- 回写 `app-compete.md`、`focus-apps.md`、snapshot、delivery manifest 和最新远端链接。
+
+默认市场：用户指定优先，其次项目 `primary_market` / `secondary_markets`，旧 `default_market` 视为 `primary_market`，都缺失时使用 `US` 为主、`CN` 为辅。
+
+默认表达：朴素中文，只写字段、证据、时间、来源；用户未要求建议时，不写动作建议、影响评估或咨询腔总结。
 
 ## Quick Start
 
-1. 检查 `docs/app-competition/` 是否存在；缺失时按 [assets/app-compete-template.md](assets/app-compete-template.md) 和 [assets/focus-apps-template.md](assets/focus-apps-template.md) 初始化。
-2. 读取 `docs/app-competition/app-compete.md` 与 `docs/app-competition/focus-apps.md`。
-3. 如果 `default_market` 未声明，先暂停分析并要求在项目文件里补齐，绝不擅自假设市场。
-4. 根据任务类型路由：
-   - 初始化目录、更新模板、维护重点问题、更新索引：当前 skill 直接处理。
-   - 找新增 app、扩充跟踪池、判断是否纳入观察：使用 `$app-competition-discovery`。
-   - 生成竞品深度报告、写 Markdown 和 JSON 快照：使用 `$app-competition-reporting`。
-5. 完成后，回写 `app-compete.md` 中的索引、`last_updated`、`report_history` 或候选池说明。
+1. 检查 `docs/app-competition/`、`app-compete.md`、`focus-apps.md` 是否存在；缺失时用 assets 模板初始化。
+2. 读取项目 contract：`target_app` / `target_apps`、`primary_market`、`secondary_markets`、`delivery_channel`、`target_keywords`、`target_keyword_source`、`core_competitors`。
+3. 检查依赖：`appstore-mcp`、`mcp-appstore`、可选 `appeeky-mcp`、飞书交付所需 `lark-cli` / lark skills。缺失时先运行 `scripts/bootstrap_app_competition.ps1` 或读取 [mcp-installation.md](references/mcp-installation.md)。
+4. 关键词来源只允许三层：用户显式提供、`appeeky-mcp.get_app_keywords`、`mcp-appstore.get_app_extracted_keywords`。任何 fallback 必须写 provenance，不能把启发式分数当真实 rank。
+5. 单产品报告：先确保 discovery fresh，再交给 `$app-competition-reporting` 生成报告、snapshot 和 evidence。
+6. 多产品报告：进入 [Portfolio Mode](#portfolio-mode)，每个自有产品独立 work unit，主 agent 统一生成 1 份组合摘要。
+7. Feishu / dual：执行 [Delivery Gate](#delivery-gate)。默认只发布 1 份飞书摘要文档；详细子文档必须由用户明确提出。
+8. 邮件或外链：先完成飞书摘要验收，再执行 SMTP 邮件或 external access gate。
 
-## Routing Guide
+## Portfolio Mode
 
-| 用户意图 | 处理方式 |
+当用户一次给出多个“我的产品 / owned apps / target apps”，不能合并成一个巨大目标产品，也不能只输出多份分散报告。必须为每个自有产品建立独立 work unit，再汇总成一份多产品摘要。
+
+Portfolio work unit 必须包含：
+- `product_slug`
+- `target_app`
+- `platform`
+- `primary_market` / `secondary_markets`
+- `target_keywords`
+- `target_keyword_source`
+- `core_competitors`
+- `report` / `snapshot` / `evidence` 路径
+
+多产品摘要固定使用 [multi-product-summary-template.md](assets/multi-product-summary-template.md)，并通过 [portfolio-summary-format.md](references/portfolio-summary-format.md) 门禁。结构必须是：
+
+1. `产品关键词记录`
+2. 每个自有产品一个一级标题：`# [自有产品] 关键词与竞品字段核查`
+3. 每个产品段只包含：
+   - `目标产品关键词记录`
+   - `目标产品字段核查`
+   - `[自有产品] 竞品变化核查`
+   - `[自有产品] 竞品宣传图核查`
+
+多产品摘要不要加入额外的封面信息表、事实综述段、产品小摘要表、跨产品竞品索引、归档证据表、局限章节、规则清单或默认二级文档入口。
+
+字段口径：
+- 目标产品字段只核查标题 / 名称、产品描述、更新日志。
+- 目标产品描述与上一版相同写 `无变化`；有变化才写 `之前的产品描述：...`、`本次产品描述：...`、`改动点：...`。
+- 更新日志直接粘贴抓取到的 releaseNotes 原文；没有则写 `没有`。
+- 默认不展示自有产品自己的 iPhone top1-3 宣传图。
+- 竞品表必须有 `icon` 列，展示抓取到的竞品产品 icon。
+- 竞品字段核查必须覆盖标题 / 名称、竞品产品描述、竞品 iPhone 前三图、更新日志。
+- 竞品宣传图只展示竞品图：每个竞品单独一个 `### [竞品] 宣传图` 小节，包含前三张 iPhone 宣传图变化、上一版竞品宣传图、本次竞品宣传图。
+
+素材口径：
+- 只允许 iPhone App Store 产品页截图作为宣传图证据。
+- `appstore-mcp.get_app_info(include=screenshots)`、`mcp-appstore.get_app_details.screenshots`、Apple lookup `screenshotUrls` 非空时，直接作为 iPhone top1-3 来源。
+- 官方字段为空且对象进入摘要时，调用 `scripts/fetch_appstore_screenshots.py --device iphone` 做网页回退。
+- 图标、Today / Features 推荐图、1x1 占位图、搜索结果卡片图不能冒充产品页前三图。
+- 用户可见摘要遇到缺图只写 `无宣传图`；采集管线状态写入 snapshot / manifest / evidence。
+
+## Delivery Gate
+
+完成条件按 `delivery_channel` 判断：
+
+| channel | 完成条件 |
 | --- | --- |
-| “给这个项目建竞品分析目录” | 当前 skill 初始化文件与目录 |
-| “帮我找最近新增的竞品 app” | 路由到 `$app-competition-discovery` |
-| “帮我做一份竞品周报/深度报告” | 路由到 `$app-competition-reporting` |
-| “把这个 app 加到重点关注列表” | 直接按项目规则更新 `focus-apps.md`，并在报告或变更说明里留痕 |
-| “更新重点问题/关键词 watchlist” | 当前 skill 更新 `app-compete.md` |
+| `markdown` | 本地 Markdown、JSON snapshot、evidence、`app-compete.md` 最新索引已回写 |
+| `feishu` | 1 份飞书摘要文档已创建 / 更新、链接与图片验收通过、manifest 与索引已回写 |
+| `dual` | 同时满足 `markdown` 与 `feishu` |
 
-## Project Contract
+Feishu / dual 规则：
+- 默认只创建 1 份飞书摘要文档。
+- 只有用户明确要求“详细子文档 / 第二份文档 / 逐张原图文档”时，才创建详细子文档和 `*-feishu-detail.md` draft。
+- 最终回复默认只需要飞书摘要链接；只有用户要求详细子文档时，才必须返回详细子文档链接。
+- 摘要中出现的自有产品和竞品名称必须使用 canonical App Store 链接。
+- 摘要必须插入竞品 icon 和竞品宣传图；不要插入自有产品自己的宣传图，除非用户明确要求。
+- 远端 `docs +fetch` 必须看到图片 token，或对应对象处写 `无宣传图`。
+- 用户可见正文不得出现 `官方 screenshot`、`官方字段`、`字段为空`、`网页回退`、`needs_page_fallback`、`page_fallback`、`lookup`、`scraper`、`接口为空` 等采集管线词。
+- manifest 不能停在 `not_started`、`local_only`、`draft_only`、`text_only_created`，除非状态明确为权限、登录、网络或组织策略阻塞。
 
-项目目录固定为：
-- `docs/app-competition/app-compete.md`
-- `docs/app-competition/focus-apps.md`
-- `docs/app-competition/reports/`
-- `docs/app-competition/snapshots/`
-- `docs/app-competition/evidence/`
+邮件交付：
+- 仅在飞书摘要链接存在并通过验收后执行。
+- 使用本地 SMTP 配置 `docs/app-competition/config/smtp.local.json` 和 [send_smtp_mail.py](scripts/send_smtp_mail.py)。
+- dry-run 通过后直接发送；缺配置写 `blocked_missing_smtp_config`。
 
-文件职责固定为：
-- `app-compete.md`：项目级总控，记录目标 app、平台范围、默认市场、重点问题、关键词 watchlist、候选池、报告索引、运行约束。
-- `focus-apps.md`：当前重点关注 app 清单，是 reporting 的首选输入。
-- `reports/`：给人读的 Markdown 报告。
-- `snapshots/`：给后续环比和自动化读的 JSON 快照。
-- `evidence/`：来源链接、版本证据、截图 URL 清单、素材快照清单。
-
-详细字段与证据规则见：
-- [references/file-contracts.md](references/file-contracts.md)
-- [references/evidence-rules.md](references/evidence-rules.md)
-- [references/mcp-playbook.md](references/mcp-playbook.md)
-
-## Core Rules
-
-- `default_market` 必须在项目文件中显式声明后，discovery 和 reporting 才能进入采集流程。
-- `focus-apps.md` 只保存“当前重点关注”的 app；不要把所有候选都塞进去。
-- discovery 必须按规则自动给候选打分并生成 `Track` / `Watch` / `Drop` 决策；不要把决策门槛推回给用户确认。
-- 需要人工复核的内容，写进 discovery 报告或 reporting 报告的“审核备注 / 不确定项”段落，而不是阻塞流程。
-- reporting 默认优先读取 `focus-apps.md`；若为空，再回退到 `app-compete.md` 的 `target_app` 和候选池。
-- 任何“关键词显著波动”“素材变化”“版本变化”结论都必须带证据，不能只给主观判断。
-- 如果 MCP 能力缺失或返回字段不完整，必须在输出里标注缺口与降级路径。
-
-## Maintenance Workflow
-
-1. 初始化项目时，创建目录与基础模板。
-2. 每次变更配置后，更新 `app-compete.md` 的 `last_updated` 与变更说明。
-3. 每次深度报告后，把报告路径写入 `report_history`，并把最近一次快照路径记入项目文件。
-4. 每次 discovery 完成后，按自动决策更新 `focus-apps.md` 或候选池摘要，并把需要复核的点写进报告。
+外网访问：
+- 用户要求“外网可访问 / public link”时，必须记录 `external_access_status`。
+- 不能把未经权限核验的飞书链接称为外网可访问。
 
 ## References
 
-- [references/workflow-map.md](references/workflow-map.md) - 总控路由与交付边界
+- [assets/multi-product-summary-template.md](assets/multi-product-summary-template.md) - 多自有产品摘要模板，必须与 Portfolio Mode 结构一致
+- [references/portfolio-summary-format.md](references/portfolio-summary-format.md) - 多产品摘要结构、禁止项和验收门禁
+- [references/keyword-source-policy.md](references/keyword-source-policy.md) - 关键词来源优先级、fallback 与 provenance
 - [references/file-contracts.md](references/file-contracts.md) - 项目文件职责与字段约定
-- [references/evidence-rules.md](references/evidence-rules.md) - 证据、时间戳与素材判断规则
-- [references/mcp-playbook.md](references/mcp-playbook.md) - 两套 MCP 的分工与优先级
-- [examples/init-project.md](examples/init-project.md) - 初始化项目示例
-- [examples/discovery-review.md](examples/discovery-review.md) - 新增 app 审核示例
-- [examples/reporting-run.md](examples/reporting-run.md) - 深度报告示例
+- [references/evidence-rules.md](references/evidence-rules.md) - 证据、时间戳、素材与变化链规则
+- [references/creative-asset-delivery.md](references/creative-asset-delivery.md) - 宣传图下载、留证与飞书插图规则
+- [references/link-quality-gate.md](references/link-quality-gate.md) - App Store URL canonical 化与飞书链接语义验收
+- [references/e2e-competition-to-feishu.md](references/e2e-competition-to-feishu.md) - 端到端飞书交付门禁
+- [references/mail-delivery.md](references/mail-delivery.md) - SMTP 邮件交付
+- [references/mcp-installation.md](references/mcp-installation.md) - MCP 安装与验证
+- [references/plain-field-check-mode.md](references/plain-field-check-mode.md) - 用户要求只检测字段变化时读取
+- [scripts/bootstrap_app_competition.ps1](scripts/bootstrap_app_competition.ps1) - 依赖自修复入口
